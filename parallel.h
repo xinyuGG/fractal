@@ -3,6 +3,7 @@
 #include <thread>
 #include <future>
 #include <mutex>
+#include <iostream>
 #include "complex.h"
 using precision = double;
 using Complex = Feng::complex<precision>;
@@ -19,11 +20,14 @@ public:
 	static int Mandelbrot(Complex&& c) {
 		Complex z;
 		register int k;
-		__m128d c128 = _mm_load_pd((const double*)(&c));
+		// __m128d c128 = _mm_load_pd((const double*)(&c));
 
 		for (k = 256 * MI - 1; k >= 0; --k) {
+#ifdef _MSC_VER
 			z.squareAdd(c128);
-			//z = z * z + c;
+#else
+			z = z * z + c;
+#endif
 			if (Feng::norm(z) > 4) return k / MI;
 		}
 		return 0;
@@ -66,9 +70,8 @@ public:
 		else {
 			int half_length = H / 2;
 			Iterator mid = first + half_length * W;
-			std::future<int> first_half = std::async(std::launch::async | std::launch::deferred,&Mandelbrot_pall<Iterator>, first, mid, W, half_length, index);
+			std::future<int> first_half = std::async(std::launch::async ,&Mandelbrot_pall<Iterator>, first, mid, W, half_length, index);
 			Mandelbrot_pall<Iterator>(mid, last, W, H - half_length, index + half_length);
-
 		}
 	}
 

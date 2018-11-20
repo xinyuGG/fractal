@@ -1,8 +1,14 @@
 ﻿#pragma once
+#ifdef _MSC_VER
 #include <intrin.h>
+#endif
 namespace Feng {
+
+#ifdef _MSC_VER
 	double a[2];
 	int squareAdd(__m128d a, __m128d ra, __m128d c, int num);
+#endif
+
 #pragma pack(16)
 
 	template<typename T>
@@ -21,7 +27,7 @@ namespace Feng {
 		bool operator == (const complex&);
 		complex& squareAdd(const complex&);
 		complex& assign(const T, const T);
-		complex<double>& squareAdd(__m128d c);
+		//complex<double>& squareAdd(__m128d c);
 
 	private:
 		T _real;
@@ -96,6 +102,7 @@ namespace Feng {
 		return *this;
 	}
 
+#ifdef _MSC_VER
 
 	template<>
 	complex<double>& complex<double>::squareAdd(const complex<double>& add_one) {
@@ -188,5 +195,7 @@ namespace Feng {
 			return squareAdd(a,  ra,  c,  --num);
 
 	}
+
+#endif
 }
 
