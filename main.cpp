@@ -4,14 +4,14 @@ using namespace std::chrono;
 using namespace Feng;
 int main() {
 	Bmp256 bmp{ W, H };
-	int num = 1;
+	int num = 5;
 	auto t1 = steady_clock::now();
 
-	// for (int i = 0; i < num; i++) {
-	// 	for (int j = 0; j < H; ++j)
-	// 		for (int i = 0; i < W; ++i)
-	// 			bmp(j, i) = Parallel::Mandelbrot(Complex{ RMIN + i / RESN, IMIN + j / RESN });
-	// }
+	for (int i = 0; i < num; i++) {
+		for (int j = 0; j < H; ++j)
+			for (int i = 0; i < W; ++i)
+				bmp(j, i) = Parallel::Mandelbrot(Complex{ RMIN + i / RESN, IMIN + j / RESN });
+	}
 
 	auto t2 = steady_clock::now();
 	std::cout << "origin run time: " << duration_cast<duration<double>>(t2 - t1).count() / (double)num << " seconds.\n";

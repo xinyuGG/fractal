@@ -1,17 +1,61 @@
-==31419== I   refs:      41,049,780,085
-==31419== I1  misses:             2,333
-==31419== LLi misses:             2,062
-==31419== I1  miss rate:           0.00%
-==31419== LLi miss rate:           0.00%
-==31419== 
-==31419== D   refs:          68,663,300  (746,332 rd   + 67,916,968 wr)
-==31419== D1  misses:         1,129,446  ( 35,641 rd   +  1,093,805 wr)
-==31419== LLd misses:         1,082,692  ( 12,540 rd   +  1,070,152 wr)
-==31419== D1  miss rate:            1.6% (    4.8%     +        1.6%  )
-==31419== LLd miss rate:            1.6% (    1.7%     +        1.6%  )
-==31419== 
-==31419== LL refs:            1,131,779  ( 37,974 rd   +  1,093,805 wr)
-==31419== LL misses:          1,084,754  ( 14,602 rd   +  1,070,152 wr)
-==31419== LL miss rate:             0.0% (    0.0%     +        1.6%  )
+
+==3691== I   refs:      85,700,536,813
+==3691== I1  misses:             2,747
+==3691== LLi misses:             2,501
+==3691== I1  miss rate:           0.00%
+==3691== LLi miss rate:           0.00%
+==3691== 
+==3691== D   refs:         101,906,425  (845,809 rd   + 101,060,616 wr)
+==3691== D1  misses:         1,676,536  ( 49,037 rd   +   1,627,499 wr)
+==3691== LLd misses:         1,607,243  ( 17,984 rd   +   1,589,259 wr)
+==3691== D1  miss rate:            1.6% (    5.8%     +         1.6%  )
+==3691== LLd miss rate:            1.6% (    2.1%     +         1.6%  )
+==3691== 
+==3691== LL refs:            1,679,283  ( 51,784 rd   +   1,627,499 wr)
+==3691== LL misses:          1,609,744  ( 20,485 rd   +   1,589,259 wr)
+==3691== LL miss rate:             0.0% (    0.0%     +         1.6%  )
 
 
+==6166== 
+==6166== I   refs:      86,102,078,657
+==6166== I1  misses:             2,007
+==6166== LLi misses:             1,919
+==6166== I1  miss rate:           0.00%
+==6166== LLi miss rate:           0.00%
+==6166== 
+==6166== D   refs:         302,750,558  (201,884,912 rd   + 100,865,646 wr)
+==6166== D1  misses:         1,589,773  (     14,519 rd   +   1,575,254 wr)
+==6166== LLd misses:         1,582,912  (      8,470 rd   +   1,574,442 wr)
+==6166== D1  miss rate:            0.5% (        0.0%     +         1.6%  )
+==6166== LLd miss rate:            0.5% (        0.0%     +         1.6%  )
+==6166== 
+==6166== LL refs:            1,591,780  (     16,526 rd   +   1,575,254 wr)
+==6166== LL misses:          1,584,831  (     10,389 rd   +   1,574,442 wr)
+==6166== LL miss rate:             0.0% (        0.0%     +         1.6%  )
+
+
+
+makefile
+mandelbrot : fractal.o parallel.h
+	g++ -o mandelbrot fractal.o parallel.h main.cpp -std=c++11 -pthread  
+fractal.o : fractal.cpp
+	g++ -c fractal.cpp -std=c++11
+origin run time: 118.263 seconds.
+para run time: 21.7378 seconds.
+
+
+mandelbrot : fractal.o parallel.h
+	g++ -o mandelbrot fractal.o parallel.h main.cpp -std=c++11 -pthread   -O3  
+fractal.o : fractal.cpp
+	g++ -c fractal.cpp -std=c++11
+
+origin run time: 30.9171 seconds.
+para run time: 3.99209 seconds.
+
+
+mandelbrot : fractal.o parallel.h
+	g++ -o mandelbrot fractal.o parallel.h main.cpp -std=c++11 -pthread   -O3  -march=native
+fractal.o : fractal.cpp
+	g++ -c fractal.cpp -std=c++11
+origin run time: 19.3415 seconds.
+para run time: 3.05088 seconds.
