@@ -57,5 +57,5 @@ mandelbrot : fractal.o parallel.h
 	g++ -o mandelbrot fractal.o parallel.h main.cpp -std=c++11 -pthread   -O3  -march=native
 fractal.o : fractal.cpp
 	g++ -c fractal.cpp -std=c++11
-origin run time: 19.3415 seconds.
-para run time: 3.05088 seconds.
+origin run time: 18.8448 seconds.
+para run time: 2.69408 seconds.
